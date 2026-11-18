@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import { getUniqueTeacher } from "../../services/TeacherServices";
+import { deleteTeacher, getUniqueTeacher } from "../../services/TeacherServices";
 import { useState, useEffect } from "react";
 export default function GetUnique() {
     const { id } = useParams();
@@ -11,27 +11,39 @@ export default function GetUnique() {
                 setTeacher(response.data);
             });
     }, [id]);
+    const deleteTeachers = async (e) => {
+        e.preventDefault();
 
+        const params = {
+            name,
+            last_name,
+            email,
+            username,
+        };
+
+        const response = await deleteTeacher(params);
+        console.log(response.data);
+    };
     return (
         <div>
             {teacher !== null ?
                 <>
                     {!edit ?
                         <div>
-                            <h2>{teacher.name}</h2>
-                            <p>{teacher.last_name}</p>
-                            <p>{teacher.email}</p>
-                            <p>{teacher.username}</p>
+                            <h2>{teacher.nombre}</h2>
+                            <p>{teacher.apellido}</p>
+                            <p>{teacher.telefono}</p>
+                            <p>{teacher.cedula}</p>
                             <br />
                             <button onClick={() => setEdit(!edit)}>Editar</button>
                         </div>
-                        
+
                         :
                         <form onSubmit={editInfo}>
                             <input type="text" placeholder="Nombre" className="teacher-create-input" value={t_name} onChange={(e) => setName(e.target.value)} />
                             <input type="text" placeholder="Apellido" className="teacher-create-input" value={t_last_name} onChange={(e) => setLast_name(e.target.value)} />
                             <br />
-                            <input type="email" placeholder="correo" className="teacher-create-input" value={t_email} onChange={(e) => setEmail(e.target.value)} />
+                            <input type="text" placeholder="correo" className="teacher-create-input" value={t_email} onChange={(e) => setEmail(e.target.value)} />
                             <input type="text" placeholder="username" className="teacher-create-input" value={t_username} onChange={(e) => setUsername(e.target.value)} />
                             <br />
                             <button type="submit">Incribir profesor</button>
@@ -39,8 +51,8 @@ export default function GetUnique() {
                         </form>
                     }
 
-                    
-                    <button type="submit" onSubmit={deleteTeacher}> Eliminar </button>
+
+                    <button type="submit" onSubmit={deleteTeachers}> Eliminar </button>
 
                 </>
                 :

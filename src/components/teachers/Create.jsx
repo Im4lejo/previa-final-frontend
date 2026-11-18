@@ -2,18 +2,18 @@ import { saveTeacher } from "../../services/TeacherServices"
 import { useState } from "react"
 export default function Create() {
     const [show, setShow] = useState(false);
-    const [name, setName] = useState("");
-    const [last_name, setLast_name] = useState("");
-    const [email, setEmail] = useState("");
-    const [username, setUsername] = useState("");
+    const [nombre, setNombre] = useState("");
+    const [apellido, setApellido] = useState("");
+    const [telefono, setTelefono] = useState("");
+    const [cedula, setCedula] = useState("");
     const save = async (e) => {
-        e.preventDefautlt();
+        e.preventDefault();
         
         const params = {
-            name: "Alejandro",
-            last_name: "Pérez",
-            email: "correo@gmail.com",
-            username: "alejo"
+            nombre,
+            apellido,
+            telefono,
+            cedula
         };
         
         const response = await saveTeacher(params);
@@ -24,11 +24,11 @@ export default function Create() {
             {show ?
                 <>
                     <form onSubmit={save}>
-                        <input type="text" placeholder="Nombre" className="teacher-create-input" value={name} onChange={(e) => setName(e.target.value)} />
-                        <input type="text" placeholder="Apellido" className="teacher-create-input" value={last_name} onChange={(e) => setLast_name(e.target.value)} />
+                        <input type="text" placeholder="Nombre" className="teacher-create-input" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+                        <input type="text" placeholder="Apellido" className="teacher-create-input" value={apellido} onChange={(e) => setApellido(e.target.value)} />
                         <br />
-                        <input type="email" placeholder="correo" className="teacher-create-input" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <input type="text" placeholder="username" className="teacher-create-input" value={username} onChange={(e) => setUsername(e.target.value)} />
+                        <input type="text" placeholder="teléfono" className="teacher-create-input" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
+                        <input type="text" placeholder="cédula" className="teacher-create-input" value={cedula} onChange={(e) => setCedula(e.target.value)} />
                         <br />
                         <button type="submit">Incribir profesor</button>
                     </form>

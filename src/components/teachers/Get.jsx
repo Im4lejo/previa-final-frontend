@@ -1,45 +1,30 @@
 import "../../App.css"
 import { getTeachers } from "../../services/TeacherServices"
 import { Link } from "react-router-dom";
-import { useState } from "react"
+import { useState ,useEffect} from "react"
 export default function Get() {
-    const [teachers, setTeachers] = useState([
-        {
-            id: 1,
-            name: 'Camila',
-            last_name: 'Gómez',
-            email: 'camila.gomez@ejemplo.com',
-            username: 'camilag'
-        },
-        {
-            id: 2,
-            name: 'Mateo',
-            last_name: 'Rodríguez',
-            email: 'mateo.rod@ejemplo.com',
-            username: 'mrodriguez'
-        },
-        {
-            id: 3,
-            name: 'Sofía',
-            last_name: 'Martínez',
-            email: 'sofia.martinez@ejemplo.com',
-            username: 'sofiam'
-        },
-        {
-            id: 4,
-            name: 'Sebastián',
-            last_name: 'López',
-            email: 'sebas.lopez@ejemplo.com',
-            username: 'slopez99'
+    const [teachers, setTeachers] = useState([]);
+
+    const getAllTeachers = async () => {
+        try {
+            const response = await getTeachers();
+            // OJO: Si en Laravel usaste paginate(15), los registros están en response.data.data
+            // Si usaste get() sin paginar, están en response.data
+            setTeachers(response.data.data || response.data);
+        } catch (error) {
+            console.error('Error al cargar profesores:', error);
         }
-    ]);
+    };
+    useEffect(() => {
+        getAllTeachers();
+    }, []);
     return (
         <div>
             {teachers.length > 0 ?
 
                 teachers.map((teacher) => (
                     <div key={teacher.id}>
-                        <p>{teacher.name} {teacher.last_name}</p>
+                        <p>{teacher.nombre} {teacher.apellido}</p>
                         <Link to={`/teachers/teacher/${teacher.id}`} className="btn-see-more">
                             Ver más
                         </Link>

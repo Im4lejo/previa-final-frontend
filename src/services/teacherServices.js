@@ -1,18 +1,18 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: "http://instituto"
+    baseURL: "http://instituto/api"
 });
 export const getTeachers = () => API.get("/teachers");
 
-export const saveTeacher = (params) => API.post("/teacher", params);
+export const saveTeacher = (params) => API.post("/teachers", params);
 
-export const deleteTeacher = (id) => API.delete(`/teacher${id}`);
+export const deleteTeacher = (id) => API.delete(`/teachers${id}`);
 
-export const editTeacher = (id, params) => API.put(`/teacher/${id}`, params);
+export const editTeacher = (id, params) => API.put(`/teachers/${id}`, params);
 
 export const getUniqueTeacher = (id) => {
-    return API.get(`/teacher/${id}`);
+    return API.get(`/teachers/${id}`);
 };
 
 
